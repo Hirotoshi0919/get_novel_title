@@ -4,13 +4,15 @@ import openpyxl
 
 class WriteExcel:
     @staticmethod
-    def write_to_excel(val, folder_path=os.getcwd(), filename="タイトル一覧"):
+    def write_to_excel(value, folder_path=os.getcwd(), filename="タイトル一覧"):
         """
         エクセル書き込み用メソッド
+        :param value:
         :param val: 書き込む値（2次元配列）
         :param folder_path: 出力先のパス（省略可）
         :param filename: 出力するエクセルのファイル名
         """
+
         wb = openpyxl.Workbook()
         ws = wb.active
 
@@ -19,7 +21,7 @@ class WriteExcel:
 
         # リストをセルに書き込み
 
-        for row in val:
+        for row in value:
             ws.append(row)
 
         wb.save(os.path.join(folder_path, filename + ".xlsx"))
