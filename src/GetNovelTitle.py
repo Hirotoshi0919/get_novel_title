@@ -55,5 +55,5 @@ class GetNovelTitle:
 
 
 if __name__ == "__main__":
-    get_title = GerNovelTitle
+    get_title = GetNovelTitle
     get_title.main()
