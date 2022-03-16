@@ -1,5 +1,4 @@
 import os
-
 import openpyxl
 
 
@@ -18,7 +17,7 @@ class WriteExcel:
         # 表の見出し項目
         ws.append(["順位", "タイトル", "リンク先", "文字数"])
 
-        # # リストをセルに書き込み
+        # リストをセルに書き込み
 
         for row in val:
             ws.append(row)

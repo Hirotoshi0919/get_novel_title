@@ -1,9 +1,8 @@
-import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome import service as fs
-from WriteExcel import WriteExcel as we
+from WriteExcel import WriteExcel as writer
 
 
 class GerNovelTitle:
@@ -45,7 +44,7 @@ class GerNovelTitle:
                 else:
                     break
 
-            we.write_to_excel(write_list)
+            writer.write_to_excel(write_list)
 
         except Exception as e:
             raise e
