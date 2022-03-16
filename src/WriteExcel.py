@@ -5,14 +5,6 @@ import openpyxl
 class WriteExcel:
     @staticmethod
     def write_to_excel(value, folder_path=os.getcwd(), filename="タイトル一覧"):
-        """
-        エクセル書き込み用メソッド
-        :param value:
-        :param val: 書き込む値（2次元配列）
-        :param folder_path: 出力先のパス（省略可）
-        :param filename: 出力するエクセルのファイル名
-        """
-
         wb = openpyxl.Workbook()
         ws = wb.active
 

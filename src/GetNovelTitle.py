@@ -5,16 +5,16 @@ from selenium.webdriver.chrome import service as fs
 from WriteExcel import WriteExcel as exl_writer
 
 
-class GerNovelTitle:
+class GetNovelTitle:
     @staticmethod
     def main():
 
-        # ドライバー指定でChromeブラウザを開く
-        chrome_service = fs.Service(executable_path="../driver/chromedriver.exe")
-        driver = webdriver.Chrome(service=chrome_service)
-        driver.implicitly_wait(10)
-
         try:
+            # ドライバー指定でChromeブラウザを開く
+            chrome_service = fs.Service(executable_path="../driver/chromedriver.exe")
+            driver = webdriver.Chrome(service=chrome_service)
+            driver.implicitly_wait(10)
+
             # ホームページにGoogleでアクセス
             driver.get("https://yomou.syosetu.com/search.php?search_type=novel&word=&button=")
 
