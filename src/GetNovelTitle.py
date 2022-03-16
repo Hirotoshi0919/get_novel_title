@@ -15,23 +15,20 @@ class GerNovelTitle:
         driver.implicitly_wait(10)
 
         try:
-
             # ホームページにGoogleでアクセス
             driver.get("https://yomou.syosetu.com/search.php?search_type=novel&word=&button=")
-
-            # プルダウンで並び替え
+            # プルダウンで「年間ポイントの高い順」で並び替え
             pull_down = driver.find_element(By.NAME, "order")
             select = Select(pull_down)
             select.select_by_value("yearlypoint")
-
             # エクセル書き込み用のリスト
             write_list = []
             rank = 1
             while True:
-                # タイトル取得
+                # タイトルの要素を取得
                 title_list = driver.find_elements(By.CLASS_NAME, "tl")
 
-                # タイトルと文字数、リンク先の多次元配列を作成
+                # タイトルと文字数、リンク先を取得
                 for title in title_list:
                     url = title.get_attribute("href")
                     row = [rank, title.text, url, len(title.text)]
@@ -43,12 +40,9 @@ class GerNovelTitle:
                     next_button[0].click()
                 else:
                     break
-
             writer.write_to_excel(write_list)
-
         except Exception as e:
             raise e
-
         finally:
             # ブラウザを閉じる
             driver.quit()
