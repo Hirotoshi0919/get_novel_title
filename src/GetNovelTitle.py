@@ -1,12 +1,13 @@
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome import service as fs
+from WriteExcel import WriteExcel as we
 
 
 class GerNovelTitle:
+
     @staticmethod
     def main():
         # ドライバー指定でChromeブラウザを開く
@@ -14,40 +15,46 @@ class GerNovelTitle:
         driver = webdriver.Chrome(service=chrome_service)
         driver.implicitly_wait(10)
 
-        # Googleアクセス
-        driver.get("https://yomou.syosetu.com/search.php?search_type=novel&word=&button=")
+        try:
 
-        time.sleep(1)
+            # ホームページにGoogleでアクセス
+            driver.get("https://yomou.syosetu.com/search.php?search_type=novel&word=&button=")
 
-        # プルダウンで並び替え
-        pull_down = driver.find_element(By.NAME, "order")
-        select = Select(pull_down)
-        select.select_by_value("yearlypoint")
+            # プルダウンで並び替え
+            pull_down = driver.find_element(By.NAME, "order")
+            select = Select(pull_down)
+            select.select_by_value("yearlypoint")
 
-        time.sleep(2)
+            # エクセル書き込み用のリスト
+            write_list = []
+            rank = 1
+            while True:
+                # タイトル取得
+                title_list = driver.find_elements(By.CLASS_NAME, "tl")
 
-        write_list = []
-        # NEXTボタンを押しつつ、タイトル取得
-        while len(driver.find_elements(By.CLASS_NAME, "nextlink")) > 0:
-            next_button = driver.find_elements(By.CLASS_NAME, "nextlink")
-            next_button[0].click()
+                # タイトルと文字数、リンク先の多次元配列を作成
+                for title in title_list:
+                    url = title.get_attribute("href")
+                    row = [rank, title.text, url, len(title.text)]
+                    write_list.append(row)
+                    rank += 1
 
-            # タイトル取得
-            title_list = driver.find_elements(By.CLASS_NAME, "tl")
+                if len(driver.find_elements(By.CLASS_NAME, "nextlink")) > 0:
+                    next_button = driver.find_elements(By.CLASS_NAME, "nextlink")
+                    next_button[0].click()
+                else:
+                    break
 
-            # タイトルと文字数、リンク先の多次元配列を作成
-            for title in title_list:
-                title.text
-                url = title.get_attribute("href")
-                row = [title.text, url, len(title.text)]
-            write_list.append(row)
+            we.write_to_excel(write_list)
 
-        # ブラウザを閉じる
-        driver.quit()
+        except Exception as e:
+            raise e
 
-        print(write_list)
+        finally:
+            # ブラウザを閉じる
+            driver.quit()
+
 
 if __name__ == "__main__":
     get_title = GerNovelTitle
-
     get_title.main()

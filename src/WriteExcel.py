@@ -1,14 +1,26 @@
+import os
+
 import openpyxl
 
 
 class WriteExcel:
     @staticmethod
-    def main():
+    def write_to_excel(val, folder_path=os.getcwd(), filename="タイトル一覧"):
+        """
+        エクセル書き込み用メソッド
+        :param val: 書き込む値（2次元配列）
+        :param folder_path: 出力先のパス（省略可）
+        :param filename: 出力するエクセルのファイル名
+        """
         wb = openpyxl.Workbook()
         ws = wb.active
 
-        # ws.cell(row=count, column=1).value = s.text
-        # ws.cell(row=count, column=2).value = s.get_attribute("href")
-        # ws.cell(row=count, column=3).value = len(s.text)
+        # 表の見出し項目
+        ws.append(["順位", "タイトル", "リンク先", "文字数"])
 
-        wb.save("Book1.xlsx")
+        # # リストをセルに書き込み
+
+        for row in val:
+            ws.append(row)
+
+        wb.save(os.path.join(folder_path, filename + ".xlsx"))
