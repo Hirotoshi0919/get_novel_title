@@ -4,12 +4,12 @@ import openpyxl
 
 class WriteExcel:
     @staticmethod
-    def write_to_excel(value, folder_path=os.getcwd(), filename="タイトル一覧"):
+    def write_to_excel(value, header, folder_path=os.getcwd(), filename="タイトル一覧"):
         wb = openpyxl.Workbook()
         ws = wb.active
 
         # 表の見出し項目
-        ws.append(["順位", "タイトル", "リンク先", "文字数"])
+        ws.append(header)
 
         # リストをセルに書き込み
 

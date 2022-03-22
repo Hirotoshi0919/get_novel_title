@@ -23,6 +23,8 @@ class GetNovelTitle:
             select = Select(pull_down)
             select.select_by_value("yearlypoint")
 
+            header = ["順位", "タイトル", "リンク先", "文字数"]
+
             # エクセル書き込み用のリスト
             write_list = []
             rank = 1
@@ -44,7 +46,7 @@ class GetNovelTitle:
                 else:
                     break
             # エクセルにリストを書き込み
-            exl_writer.write_to_excel(value=write_list)
+            exl_writer.write_to_excel(value=write_list, header=header)
 
         except Exception as e:
             raise e
