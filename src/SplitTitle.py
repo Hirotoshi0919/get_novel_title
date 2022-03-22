@@ -8,7 +8,7 @@ class SplitTitle:
     @staticmethod
     def main():
         # 読み込みエクセル
-        book = openpyxl.load_workbook('タイトル一覧.xlsx')
+        book = openpyxl.load_workbook("タイトル一覧.xlsx")
 
         t = Tokenizer()
         # 空の辞書
@@ -23,7 +23,7 @@ class SplitTitle:
             s = active_sheet.cell(column=2, row=i).value
 
             d2 = collections.Counter(token.base_form for token in t.tokenize(s)
-                                     if token.part_of_speech.startswith('名詞'))
+                                     if token.part_of_speech.startswith("名詞"))
             # 同一keyでvalueを加算する
             d1 += d2
 
@@ -37,5 +37,5 @@ class SplitTitle:
         exl_writer.write_to_excel(value=write_list, filename="単語の出現頻度", header=header)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     SplitTitle.main()
